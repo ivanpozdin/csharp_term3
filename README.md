@@ -1,2 +1,2 @@
 # csharp_term3
-Repo for C# homeworks and test.
+Repo for C# homeworks and tests.
