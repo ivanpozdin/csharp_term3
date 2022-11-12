@@ -1,0 +1,15 @@
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/bin/Debug/net6.0/Test_November12
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/bin/Debug/net6.0/Test_November12.deps.json
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/bin/Debug/net6.0/Test_November12.runtimeconfig.json
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/bin/Debug/net6.0/Test_November12.dll
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/bin/Debug/net6.0/Test_November12.pdb
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/Test_November12.csproj.AssemblyReference.cache
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/Test_November12.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/Test_November12.AssemblyInfoInputs.cache
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/Test_November12.AssemblyInfo.cs
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/Test_November12.csproj.CoreCompileInputs.cache
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/Test_November12.dll
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/refint/Test_November12.dll
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/Test_November12.pdb
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/Test_November12.genruntimeconfig.cache
+/Users/ivanpozdin/RiderProjects/csharp_term3/Test_November12/obj/Debug/net6.0/ref/Test_November12.dll
