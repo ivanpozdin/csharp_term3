@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using Test_November12;
+﻿using Test_November12;
 
 public class SamplesSortedList2
 {

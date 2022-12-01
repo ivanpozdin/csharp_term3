@@ -1,10 +1,10 @@
 namespace Test_November12;
 
-public class ThreadSafePriorityQueue<T, TP> where TP : IComparable
+public class ThreadSafePriorityQueue<TValue, TPriority> where TPriority : IComparable
 {
-    private readonly SortedList<TP, Queue<T>> _priorityQueue = new SortedList<TP, Queue<T>>();
+    private readonly SortedList<TPriority, Queue<TValue>> _priorityQueue = new SortedList<TPriority, Queue<TValue>>();
     private int _size;
-    public void Enqueue(T value, TP priority)
+    public void Enqueue(TValue value, TPriority priority)
     {
         lock (_priorityQueue)
         {
@@ -14,7 +14,7 @@ public class ThreadSafePriorityQueue<T, TP> where TP : IComparable
             }
             else
             {
-                var tmpQueue = new Queue<T>();
+                var tmpQueue = new Queue<TValue>();
                 tmpQueue.Enqueue(value);
                 _priorityQueue.Add(priority, tmpQueue);
             }
@@ -26,7 +26,7 @@ public class ThreadSafePriorityQueue<T, TP> where TP : IComparable
             }
         }
     }
-    public T Dequeue()
+    public TValue Dequeue()
     {
         lock (_priorityQueue)
         {
