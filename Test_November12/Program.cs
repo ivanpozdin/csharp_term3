@@ -1,20 +1,19 @@
-﻿using Test_November12;
+﻿namespace Test_November12;
 
-public class SamplesSortedList2
+public static class SamplesSortedList2
 {
     public static void Main()
     {
-        var Queue = new ThreadSafePriorityQueue<string, int>();
-        Queue.Enqueue("hello", 1);
-        Queue.Enqueue("hello", 1);
-        Queue.Enqueue("lamp", 2);
-        Queue.Enqueue("filter", 0);
-        Queue.Enqueue("hello", 1);
-        for (int i = 0; i < 6; i++)
+        var queue = new ThreadSafePriorityQueue<string, int>();
+        queue.Enqueue("hello", 1);
+        queue.Enqueue("hello", 1);
+        queue.Enqueue("lamp", 2);
+        queue.Enqueue("filter", 0);
+        queue.Enqueue("hello", 1);
+        for (var i = 0; i < 6; i++)
         {
-            Console.WriteLine(Queue.Size());
-            Console.WriteLine(Queue.Dequeue());
+            Console.WriteLine(queue.Size);
+            Console.WriteLine(queue.Dequeue());
         }
     }
-
 }

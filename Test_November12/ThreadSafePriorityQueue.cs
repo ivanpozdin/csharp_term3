@@ -2,8 +2,16 @@ namespace Test_November12;
 
 public class ThreadSafePriorityQueue<TValue, TPriority> where TPriority : IComparable
 {
-    private readonly SortedList<TPriority, Queue<TValue>> _priorityQueue = new SortedList<TPriority, Queue<TValue>>();
-    private int _size;
+    private readonly SortedList<TPriority, Queue<TValue>> _priorityQueue = new();
+
+    /**
+     * Amount of elements in the queue.
+     */
+    public int Size;
+
+    /**
+     * Method enqueues value with certain priority to the queue.
+     */
     public void Enqueue(TValue value, TPriority priority)
     {
         lock (_priorityQueue)
@@ -19,35 +27,26 @@ public class ThreadSafePriorityQueue<TValue, TPriority> where TPriority : ICompa
                 _priorityQueue.Add(priority, tmpQueue);
             }
 
-            _size++;
-            if (_size == 1)
-            {
-                Monitor.PulseAll(_priorityQueue);
-            }
+            Size++;
+            if (Size == 1) Monitor.PulseAll(_priorityQueue);
         }
     }
+
+    /**
+     * Method dequeues value with maximum priority.
+     */
     public TValue Dequeue()
     {
         lock (_priorityQueue)
         {
-            while (_size == 0)
-            {
-                Monitor.Wait(_priorityQueue);
-            }
+            while (Size == 0) Monitor.Wait(_priorityQueue);
 
-            var returnValue = _priorityQueue.Values[0].Dequeue();
-            if (_priorityQueue.Values[0].Count == 0)
-            {
-                _priorityQueue.Remove(_priorityQueue.Keys[0]);
-            }
-
-            _size--;
+            var indexOfMaxPriority = _priorityQueue.Count - 1;
+            var returnValue = _priorityQueue.Values[indexOfMaxPriority].Dequeue();
+            if (_priorityQueue.Values[indexOfMaxPriority].Count == 0)
+                _priorityQueue.Remove(_priorityQueue.Keys[indexOfMaxPriority]);
+            Size--;
             return returnValue;
         }
-    }
-
-    public int Size()
-    {
-        return _size;
     }
 }
