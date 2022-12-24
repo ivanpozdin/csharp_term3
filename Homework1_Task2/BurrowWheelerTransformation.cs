@@ -11,7 +11,7 @@ public class BurrowWheelerTransformation
     public static KeyValuePair<string, int> DoBurrowsWheelerTransformation(string str)
     {
         var listOfStringRotations = new List<string>();
-        var newStr = string.Copy(str);
+        var newStr = str;
         for (var i = 0; i < str.Length; i++)
         {
             newStr = GetNextStringRotation(newStr);
