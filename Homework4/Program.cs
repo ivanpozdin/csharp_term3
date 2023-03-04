@@ -7,6 +7,7 @@ var ip = IPAddress.Parse("127.0.0.1");
 var port = 1111;
 var separator = Path.DirectorySeparatorChar;
 var path = $"..{separator}..{separator}..{separator}Directory1";
-
-new Server(ip, port, path).StartServer(new CancellationTokenSource());
+var cancellationTokenSource = new CancellationTokenSource();
+new Server(ip, port, path).StartServer(cancellationTokenSource);
 await new Client(ip, port).StartClient();
+cancellationTokenSource.Cancel();

@@ -25,20 +25,24 @@ public class Server
     {
         var writer = new StreamWriter(stream);
         var isPathDirectory = (File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory;
-        if (isPathDirectory)
+        if (isPathDirectory && Directory.Exists(path))
         {
             var (directories, files) = (Directory.GetDirectories(path), Directory.GetFiles(path));
-            await WriteAndFlush(writer, $"{files.Length + directories.Length} ");
+            await WriteAndFlush(writer, $"{files.Length + directories.Length}");
             var isDir = false;
             foreach (var file in files)
-                await WriteAndFlush(writer, $"{file} {isDir} ");
+                await WriteAndFlush(writer, $" {file} {isDir}");
             isDir = true;
             foreach (var directory in directories)
-                await WriteAndFlush(writer, $"{directory} {isDir} ");
+                await WriteAndFlush(writer, $" {directory} {isDir}");
+        }
+        else if (!isPathDirectory && File.Exists(path))
+        {
+            await WriteAndFlush(writer, $"{1} {path} {false} ");
         }
         else
         {
-            await WriteAndFlush(writer, $"{1} {path} {false} ");
+            await WriteAndFlush(writer, $"{-1}");
         }
     }
 
@@ -46,7 +50,11 @@ public class Server
     {
         var writer = new StreamWriter(stream);
         if (!File.Exists(filePath))
-            await WriteAndFlush(writer, "-1 ");
+        {
+            await WriteAndFlush(writer, "-1");
+            return;
+        }
+
         var size = new FileInfo(filePath).Length;
 
         await WriteAndFlush(writer, size + " ");

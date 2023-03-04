@@ -37,7 +37,7 @@ public class Client
                     break;
                 case "2":
                     if (commandSplit.Length != 3) continue;
-                    await Get(commandSplit[1], commandSplit[2]);
+                    await DownloadFiles(commandSplit[1], commandSplit[2]);
                     break;
                 default:
                     Console.WriteLine("Unknown command");
@@ -60,7 +60,19 @@ public class Client
         return (size, directoryContent);
     }
 
-    private async Task Get(string serverPath, string clientPath)
+    private async Task DownloadFiles(string serverPath, string clientPath)
+    {
+        try
+        {
+            await GetAllFilesFromFolder(serverPath, clientPath);
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("File Not Found On Server1");
+        }
+    }
+
+    private async Task GetOneFile(string serverPath, string clientPath)
     {
         var client = new TcpClient();
         await client.ConnectAsync(_ip, _port);
@@ -73,7 +85,7 @@ public class Client
         var length = GetFileLengthFromServer(stream);
         if (length == -1)
         {
-            Console.WriteLine("File wasn't found on server.");
+            Console.WriteLine("File Not Found On Server2");
             return;
         }
 
@@ -125,17 +137,46 @@ public class Client
     private async Task DownloadFileToPath(NetworkStream stream, string serverPath, string clientPath, long length)
     {
         var filename = Path.GetFileName(serverPath);
-
-        await using var fileStream = File.Create(clientPath);
-        while (length > 0)
+        try
         {
-            var buffer = new byte[stream.Socket.ReceiveBufferSize];
-            var receivedLength = await stream.ReadAsync(buffer);
-            await fileStream.WriteAsync(buffer.AsMemory(0, receivedLength));
-            length -= receivedLength;
-        }
+            await using var fileStream = File.Create(clientPath +
+                                                     (clientPath[^1] != Path.DirectorySeparatorChar
+                                                         ? Path.DirectorySeparatorChar
+                                                         : "") + filename);
+            while (length > 0)
+            {
+                var buffer = new byte[stream.Socket.ReceiveBufferSize];
+                var receivedLength = await stream.ReadAsync(buffer);
+                await fileStream.WriteAsync(buffer.AsMemory(0, receivedLength));
+                length -= receivedLength;
+            }
 
-        Console.WriteLine($"Downloaded {Path.GetFileName(filename)} to {clientPath} successfully");
+            Console.WriteLine($"Downloaded {Path.GetFileName(filename)} to {clientPath} successfully");
+        }
+        catch (DirectoryNotFoundException)
+        {
+            Console.WriteLine("Client Directory Not Found");
+        }
+    }
+
+    private async Task GetAllFilesFromFolder(string serverPath, string clientPath)
+    {
+        try
+        {
+            var (_, list) = await List(serverPath);
+            var listOfDownloads = new List<Task>();
+
+            foreach (var (file, isDir) in list)
+                if (!isDir)
+                    listOfDownloads.Add(GetOneFile(file, clientPath));
+
+            foreach (var download in listOfDownloads)
+                await download;
+        }
+        catch (InvalidDataException)
+        {
+            Console.WriteLine("Directory Not Found On Server");
+        }
     }
 
     private async Task PrintListOfFilesAndDirectories(string path)
@@ -159,9 +200,9 @@ public class Client
         Console.WriteLine("There are 3 commands:");
         Console.WriteLine("\"0\" = stop client.");
         Console.WriteLine(
-            "\"1 <path_on_server\" = command to get list of all files and folders in specified serverPath on server.");
+            "\"1 <path_on_server>\" = command to get list of all files and folders in specified <path_on_server> on server.");
         Console.WriteLine("\"2 <path_on_server> <path_on_client>\" = " +
-                          "command to download specified file on server to specified serverPath on client computer.");
+                          "command to download specified file or files from folder on server to <specified path_on_client> (folder) on client computer.");
         Console.WriteLine(
             $"\n List of files and directories that you can access by specifying:\".{Path.DirectorySeparatorChar}<path_to_file_or_directory>\":");
         await PrintListOfFilesAndDirectories($".{Path.DirectorySeparatorChar}");
