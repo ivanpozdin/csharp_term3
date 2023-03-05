@@ -27,6 +27,9 @@ public static class SuffixArray
                 if (pairs[i] != pairs[i - 1]) rating++;
                 arrayForFastCompare[positions[i]] = rating;
             }
+
+            if (rating == n-1)
+                break;
         }
 
         return positions;

@@ -2,12 +2,6 @@ namespace Homework1_Task2;
 
 public static class BurrowWheelerTransformation
 {
-    private static string GetNextStringRotation(string str)
-    {
-        var startElement = str[0];
-        return str.Remove(0, 1) + startElement;
-    }
-
     public static KeyValuePair<string, int> DoBurrowsWheelerTransformation(string text)
     {
         var n = text.Length;
@@ -38,4 +32,5 @@ public static class BurrowWheelerTransformation
 
         return listOfStringRotations[index];
     }
+    
 }
