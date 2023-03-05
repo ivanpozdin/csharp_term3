@@ -17,7 +17,7 @@ public static class BurrowWheelerTransformation
         for (var i = 0; i < n; i++)
         {
             bwtString += text[(suffixArray[i] + n - 1) % n];
-            if (suffixArray[i] == 0) positionOfGivenString = suffixArray[i];
+            if (suffixArray[i] == 0) positionOfGivenString = i;
         }
 
         return new KeyValuePair<string, int>(bwtString, positionOfGivenString);
