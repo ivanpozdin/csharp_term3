@@ -1,6 +1,6 @@
 namespace Homework1_Task2;
 
-public class BurrowWheelerTransformation
+public static class BurrowWheelerTransformation
 {
     private static string GetNextStringRotation(string str)
     {
