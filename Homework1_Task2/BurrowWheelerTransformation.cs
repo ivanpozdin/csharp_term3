@@ -8,38 +8,31 @@ public static class BurrowWheelerTransformation
         return str.Remove(0, 1) + startElement;
     }
 
-    public static KeyValuePair<string, int> DoBurrowsWheelerTransformation(string str)
+    public static KeyValuePair<string, int> DoBurrowsWheelerTransformation(string text)
     {
-        var listOfStringRotations = new List<string>();
-        var newStr = str;
-        for (var i = 0; i < str.Length; i++)
+        var n = text.Length;
+        var suffixArray = SuffixArray.CreateSuffixArray(text);
+        var bwtString = "";
+        var positionOfGivenString = 0;
+        for (var i = 0; i < n; i++)
         {
-            newStr = GetNextStringRotation(newStr);
-            listOfStringRotations.Add(newStr);
+            bwtString += text[(suffixArray[i] + n - 1) % n];
+            if (suffixArray[i] == 0) positionOfGivenString = suffixArray[i];
         }
 
-        listOfStringRotations = listOfStringRotations.OrderBy(q => q).ToList();
-        newStr = string.Empty;
-        var strIndex = 0;
-        foreach (var stringRotation in listOfStringRotations)
-        {
-            newStr += stringRotation[^1];
-            if (string.CompareOrdinal(str, stringRotation) == 0) strIndex = newStr.Length - 1;
-        }
-
-        return new KeyValuePair<string, int>(newStr, strIndex);
+        return new KeyValuePair<string, int>(bwtString, positionOfGivenString);
     }
 
-    public static string ReverseBurrowsWheelerTransformation(string strBWT, int index)
+    public static string ReverseBurrowsWheelerTransformation(string textBWT, int index)
     {
-        if (strBWT == string.Empty) return string.Empty;
+        if (textBWT == string.Empty) return string.Empty;
         var listOfStringRotations = new List<string>();
-        foreach (var letter in strBWT) listOfStringRotations.Add(letter.ToString());
+        foreach (var letter in textBWT) listOfStringRotations.Add(letter.ToString());
         listOfStringRotations.Sort();
 
-        while (listOfStringRotations[0].Length < strBWT.Length)
+        while (listOfStringRotations[0].Length < textBWT.Length)
         {
-            for (var i = 0; i < strBWT.Length; i++) listOfStringRotations[i] = strBWT[i] + listOfStringRotations[i];
+            for (var i = 0; i < textBWT.Length; i++) listOfStringRotations[i] = textBWT[i] + listOfStringRotations[i];
             listOfStringRotations.Sort();
         }
 
