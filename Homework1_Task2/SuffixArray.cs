@@ -2,6 +2,11 @@ namespace Homework1_Task2;
 
 public static class SuffixArray
 {
+    /// <summary>
+    /// Create suffix array from the given text.
+    /// </summary>
+    /// <param name="text">Given text.</param>
+    /// <returns>Suffix array.</returns>
     public static int[] CreateSuffixArray(string text)
     {
         var n = text.Length;
