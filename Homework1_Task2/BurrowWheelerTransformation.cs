@@ -17,20 +17,20 @@ public static class BurrowWheelerTransformation
         return new KeyValuePair<string, int>(bwtString, positionOfGivenString);
     }
 
-    public static string ReverseBurrowsWheelerTransformation(string textBWT, int index)
+    public static string ReverseBurrowsWheelerTransformation(string text, int index)
     {
-        if (textBWT == string.Empty) return string.Empty;
-        var listOfStringRotations = new List<string>();
-        foreach (var letter in textBWT) listOfStringRotations.Add(letter.ToString());
-        listOfStringRotations.Sort();
+        var sortedText = text.OrderBy(c => c).ToArray();
 
-        while (listOfStringRotations[0].Length < textBWT.Length)
-        {
-            for (var i = 0; i < textBWT.Length; i++) listOfStringRotations[i] = textBWT[i] + listOfStringRotations[i];
-            listOfStringRotations.Sort();
-        }
+        var occurrences = new Dictionary<char, int>();
+        for (var i = 0; i < text.Length; i++)
+            if (i == 0 || sortedText[i] != sortedText[i - 1])
+                occurrences.Add(sortedText[i], i);
 
-        return listOfStringRotations[index];
+        var transitions = text.Select(c => occurrences[c]++).ToArray();
+        var originalText = "";
+        for (var i = index; originalText.Length != text.Length; i = transitions[i])
+            originalText = text[i] + originalText;
+
+        return originalText;
     }
-    
 }
