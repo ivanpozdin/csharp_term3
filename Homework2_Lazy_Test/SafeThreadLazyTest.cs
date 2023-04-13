@@ -6,7 +6,7 @@ public class SafeThreadLazyTest
     [Fact]
     public void Test1()
     {
-        ThreadSafeLazy<int> lazy = new ThreadSafeLazy<int>(() => 100);
+        ThreadSafeLazy<int> lazy = LazyFactory<int>.CreateThreadSafeLazy(() => 100);
         Assert.Equal(100, lazy.Get());
     }
     
@@ -14,7 +14,7 @@ public class SafeThreadLazyTest
     public void Test2()
     {
         var random = new Random();
-        ThreadSafeLazy<int> lazy = new ThreadSafeLazy<int>(() => random.Next(0, 10000));
+        ThreadSafeLazy<int> lazy = LazyFactory<int>.CreateThreadSafeLazy(() => random.Next(0, 10000));
         var firstCall = lazy.Get();
         var secondCall = lazy.Get();
         Assert.Equal(firstCall, secondCall);
