@@ -1,4 +1,4 @@
-namespace Homework2_Lazy;
+namespace My_Lazy;
 
 public class OneThreadLazy<T> : ILazy<T>
 {
@@ -11,6 +11,10 @@ public class OneThreadLazy<T> : ILazy<T>
         _supplier = supplier;
     }
 
+    /// <summary>
+    ///     Function does lazy calculation. Can be used only by one thread!
+    /// </summary>
+    /// <returns>Result of lazy calculation with corresponding type.</returns>
     public T? Get()
     {
         if (!_isValueCalculated)

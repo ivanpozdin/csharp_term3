@@ -1,45 +1,41 @@
-using Homework2_Lazy;
+using My_Lazy;
+
 namespace Homework2_Lazy_Test;
 
 public class SafeThreadLazyTest
 {
     [Fact]
-    public void Test1()
+    public void TestSimpleCalculation()
     {
-        ThreadSafeLazy<int> lazy = LazyFactory<int>.CreateThreadSafeLazy(() => 100);
+        var lazy = LazyFactory<int>.CreateThreadSafeLazy(() => 100);
         Assert.Equal(100, lazy.Get());
     }
-    
+
     [Fact]
-    public void Test2()
+    public void TestTwoGetFromOneLazy()
     {
         var random = new Random();
-        ThreadSafeLazy<int> lazy = LazyFactory<int>.CreateThreadSafeLazy(() => random.Next(0, 10000));
+        var lazy = LazyFactory<int>.CreateThreadSafeLazy(() => random.Next(0, 10000));
         var firstCall = lazy.Get();
         var secondCall = lazy.Get();
         Assert.Equal(firstCall, secondCall);
     }
 
-    int Fibonacci(int n)
+    private int Fibonacci(int n)
     {
-        if (n == 1)
-        {
-            return 0;
-        }
+        if (n == 1) return 0;
 
-        if (n == 2)
-        {
-            return 1;
-        }
+        if (n == 2) return 1;
 
         return Fibonacci(n - 1) + Fibonacci(n - 2);
     }
+
     [Fact]
-    public void Test3()
+    public void TestRaces()
     {
         var lazy = LazyFactory<int>.CreateThreadSafeLazy(() => Fibonacci(42));
-        int firstThreadValue = 0;
-        int secondThreadValue = 1;
+        var firstThreadValue = 0;
+        var secondThreadValue = 1;
         var firstThread = new Thread(() =>
         {
             var value = lazy.Get();
@@ -56,5 +52,4 @@ public class SafeThreadLazyTest
         secondThread.Join();
         Assert.Equal(firstThreadValue, secondThreadValue);
     }
-    
 }
