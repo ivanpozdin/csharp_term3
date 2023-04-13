@@ -33,23 +33,31 @@ public class SafeThreadLazyTest
     [Fact]
     public void TestRaces()
     {
-        var lazy = LazyFactory<int>.CreateThreadSafeLazy(() => Fibonacci(42));
-        var firstThreadValue = 0;
-        var secondThreadValue = 1;
-        var firstThread = new Thread(() =>
+        var isTestSucceed = true;
+        for (var i = 0; i < 10; i++)
         {
-            var value = lazy.Get();
-            firstThreadValue = value;
-        });
-        var secondThread = new Thread(() =>
-        {
-            var value = lazy.Get();
-            secondThreadValue = value;
-        });
-        firstThread.Start();
-        secondThread.Start();
-        firstThread.Join();
-        secondThread.Join();
-        Assert.Equal(firstThreadValue, secondThreadValue);
+            var lazy = LazyFactory<int>.CreateThreadSafeLazy(() => Fibonacci(new Random().Next(35, 43)));
+            var firstThreadValue = 0;
+            var secondThreadValue = 1;
+            var firstThread = new Thread(() =>
+            {
+                var value = lazy.Get();
+                firstThreadValue = value;
+            });
+            var secondThread = new Thread(() =>
+            {
+                var value = lazy.Get();
+                secondThreadValue = value;
+            });
+            firstThread.Start();
+            secondThread.Start();
+            firstThread.Join();
+            secondThread.Join();
+            isTestSucceed = firstThreadValue == secondThreadValue;
+            if (!isTestSucceed)
+                break;
+        }
+
+        Assert.True(isTestSucceed);
     }
 }
