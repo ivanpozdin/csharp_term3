@@ -33,6 +33,7 @@ public class MyThreadPool
 
     public void Shutdown()
     {
+        _cancellationTokenSource.Cancel();
         foreach (var thread in _threads) thread.Join();
     }
 
