@@ -83,8 +83,8 @@ public static class QuickSort
         else
         {
             var q = Partition(array, left, right);
-            var leftThread = new Thread(() => { MultiThreadSort(array, left, q, freeThreadsNumber - 2); });
-            var rightThread = new Thread(() => { MultiThreadSort(array, q + 1, right, freeThreadsNumber - 2); });
+            var leftThread = new Thread(() => MultiThreadSort(array, left, q, freeThreadsNumber - 2));
+            var rightThread = new Thread(() => MultiThreadSort(array, q + 1, right, freeThreadsNumber - 2));
             leftThread.Start();
             rightThread.Start();
             leftThread.Join();
