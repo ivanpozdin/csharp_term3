@@ -7,15 +7,15 @@ namespace TicTacToe.Pages;
 public class GameOver : PageModel
 {
     private readonly TicTacToeDbContext _context;
-    private readonly List<Turn> Turns;
+    private readonly List<Turn> _turns;
     public Board Board;
     public string Winner;
 
     public GameOver(TicTacToeDbContext context)
     {
         _context = context;
-        Turns = context.Turns.OrderBy(p => p.TurnId).ToList();
-        Board = new Board(Turns);
+        _turns = context.Turns.OrderBy(p => p.TurnId).ToList();
+        Board = new Board(_turns);
         if (Board.DidFirstWon)
             Winner = "Победил первый игрок!";
         else if (Board.DidSecondWon)
@@ -31,7 +31,7 @@ public class GameOver : PageModel
 
     public async void OnPost()
     {
-        foreach (var turn in Turns)
+        foreach (var turn in _turns)
         {
             _context.Turns.Remove(turn);
             await _context.SaveChangesAsync();

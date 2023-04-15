@@ -35,19 +35,9 @@ public class Board
         return true;
     }
 
-    public string GetRow1()
+    public string GetRow(int r)
     {
-        return _board[0, 0] + _board[0, 1].ToString() + _board[0, 2] + "\n";
-    }
-
-    public string GetRow2()
-    {
-        return _board[1, 0] + _board[1, 1].ToString() + _board[1, 2] + "\n";
-    }
-
-    public string GetRow3()
-    {
-        return _board[2, 0] + _board[2, 1].ToString() + _board[2, 2] + "\n";
+        return _board[r, 0] + _board[r, 1].ToString() + _board[r, 2] + "\n";
     }
 
 

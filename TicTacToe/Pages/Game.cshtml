@@ -37,9 +37,10 @@
             </select>
         </p>
         <button type="submit">Походить</button>
-        <div>@(Model.Board.GetRow1())</div>
-        <div>@(Model.Board.GetRow2())</div>
-        <div>@(Model.Board.GetRow3())</div>
+        <button type="button"></button>
+        <div>@(Model.Board.GetRow(0))</div>
+        <div>@(Model.Board.GetRow(1))</div>
+        <div>@(Model.Board.GetRow(2))</div>
     </form>
 
 </div>

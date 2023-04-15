@@ -9,37 +9,30 @@ namespace TicTacToe.Pages;
 public class Game : PageModel
 {
     private readonly TicTacToeDbContext _context;
+    private readonly List<Turn> _turns;
+    public Board Board;
 
     public Game(TicTacToeDbContext context)
     {
         _context = context;
+        _turns = context.Turns.OrderBy(p => p.TurnId).ToList();
+        Board = new Board(_turns);
     }
 
-    public Board Board { get; set; } = new();
     public Turn Turn { get; set; } = new();
 
 
     public async void OnPostAsync()
     {
-        var turns = _context.Turns.OrderBy(p => p.TurnId).ToList();
-
-
-        // foreach (var turn in turns)
-        // {
-        //     _context.Turns.Remove(turn);
-        //     await _context.SaveChangesAsync();
-        // }
-
-
         var isTurnedAlready = false;
-        foreach (var turn in turns)
+        foreach (var turn in _turns)
             if (Turn.Row == turn.Row && Turn.Column == turn.Column)
                 isTurnedAlready = true;
 
         if (!isTurnedAlready)
         {
-            turns.Add(Turn);
-            Board = new Board(turns);
+            _turns.Add(Turn);
+            Board = new Board(_turns);
             _context.Turns.Add(Turn);
             await _context.SaveChangesAsync();
             if (Board.IsGameOver)
