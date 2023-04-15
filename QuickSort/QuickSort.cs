@@ -76,19 +76,17 @@ public static class QuickSort
         {
             InsertSort(array, left, right);
         }
-        else if (freeThreadsNumber <= 1)
+        else if (freeThreadsNumber <= 0)
         {
             SingleThreadSort(array, left, right);
         }
         else
         {
-            var q = Partition(array, left, right);
-            var leftThread = new Thread(() => MultiThreadSort(array, left, q, freeThreadsNumber - 2));
-            var rightThread = new Thread(() => MultiThreadSort(array, q + 1, right, freeThreadsNumber - 2));
-            leftThread.Start();
-            rightThread.Start();
-            leftThread.Join();
-            rightThread.Join();
+            var partition = Partition(array, left, right);
+            var thread = new Thread(() => MultiThreadSort(array, left, partition, freeThreadsNumber - 1));
+            thread.Start();
+            MultiThreadSort(array, partition + 1, right, freeThreadsNumber - 2);
+            thread.Join();
         }
     }
 }

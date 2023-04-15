@@ -13,7 +13,7 @@ int[] GenerateArray(int size)
 
 const int threadsNumber = 8;
 
-for (var length = 1000; length <= 10000000; length *= 10)
+for (var length = 1000; length <= 100000000; length *= 10)
 {
     var arrayForSingleThreadSort = GenerateArray(length);
     var arrayForMultiThreadSort = new int[length];
@@ -32,7 +32,7 @@ for (var length = 1000; length <= 10000000; length *= 10)
     multiThreadStopwatch.Stop();
 
     Console.WriteLine(
-        $"Single thread quick sort work time for {length} elements random array: {singleThreadStopWatch.ElapsedMilliseconds } ms");
+        $"Single thread quick sort work time for {length} elements random array: {singleThreadStopWatch.ElapsedMilliseconds} ms");
     Console.WriteLine(
         $"Multi thread quick sort work time: for {length} elements random array with {threadsNumber} threads: {multiThreadStopwatch.ElapsedMilliseconds} ms");
 }

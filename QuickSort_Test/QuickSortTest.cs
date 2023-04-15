@@ -58,7 +58,7 @@ public class Tests
     public void SingleThreadSortOutOfRangeExceptionTest(int size, int left, int right)
     {
         var array = GenerateArray(size);
-        Assert.Throws<ArgumentOutOfRangeException>(() => 
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
             QuickSort.QuickSort.SingleThreadSort(array, left, right));
     }
 
