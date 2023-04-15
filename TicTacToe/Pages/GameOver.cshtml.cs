@@ -11,6 +11,10 @@ public class GameOver : PageModel
     public Board Board;
     public string Winner;
 
+    /// <summary>
+    ///     Creates GameOver class which shows who won the game and deletes all moves from the DataBase.
+    /// </summary>
+    /// <param name="context"></param>
     public GameOver(TicTacToeDbContext context)
     {
         _context = context;
@@ -24,11 +28,9 @@ public class GameOver : PageModel
             Winner = "Ничья!";
     }
 
-
-    public void OnGet()
-    {
-    }
-
+    /// <summary>
+    ///     Deletes all turns in DataBase and redirects to the Home page.
+    /// </summary>
     public async void OnPost()
     {
         foreach (var turn in _turns)

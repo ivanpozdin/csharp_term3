@@ -16,15 +16,29 @@ public class Board
 
     private readonly List<Turn> _turns;
 
+    /// <summary>
+    ///     Create Board class which stores and analyzes turns.
+    /// </summary>
+    /// <param name="turns">List of player's turns.</param>
     public Board(List<Turn> turns)
     {
         _turns = turns;
         for (var i = 0; i < turns.Count; i++) MakeTurn(i % 2 == 0, turns[i].Row, turns[i].Column);
     }
 
-
+    /// <summary>
+    ///     Returns true if it's game over, and false otherwise.
+    /// </summary>
     public bool IsGameOver => DidWon(FirstPlayerFigure) || DidWon(SecondPlayerFigure) || _turns.Count == 9;
+
+    /// <summary>
+    ///     Returns true if first player won, and false otherwise.
+    /// </summary>
     public bool DidFirstWon => DidWon(FirstPlayerFigure);
+
+    /// <summary>
+    ///     Returns true if second player won, and false otherwise.
+    /// </summary>
     public bool DidSecondWon => DidWon(SecondPlayerFigure);
 
     private bool MakeTurn(bool isFirstPlayer, int row, int column)
@@ -39,8 +53,16 @@ public class Board
         return true;
     }
 
+    /// <summary>
+    ///     Returns string that represents a row of the game board.
+    /// </summary>
+    /// <param name="r">
+    ///     Row number. 0<=r<=2
+    /// </param>
+    /// <returns></returns>
     public string GetRow(int r)
     {
+        if (r < 0 || r > 2) throw new ArgumentOutOfRangeException();
         return _board[r, 0] + _board[r, 1] + _board[r, 2] + "\n";
     }
 

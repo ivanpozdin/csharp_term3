@@ -10,8 +10,16 @@ public class Game : PageModel
 {
     private readonly TicTacToeDbContext _context;
     private readonly List<Turn> _turns;
+
+    /// <summary>
+    ///     Class that stores moves and game board.
+    /// </summary>
     public Board Board;
 
+    /// <summary>
+    ///     Create Game class that handles turns.
+    /// </summary>
+    /// <param name="context">DataBase context.</param>
     public Game(TicTacToeDbContext context)
     {
         _context = context;
@@ -21,7 +29,9 @@ public class Game : PageModel
 
     public Turn Turn { get; set; } = new();
 
-
+    /// <summary>
+    ///     Receive new turn and redirect to GameOver page if game over.
+    /// </summary>
     public async void OnPostButton1()
     {
         var isTurnedAlready = false;
@@ -43,6 +53,9 @@ public class Game : PageModel
         }
     }
 
+    /// <summary>
+    ///     Delete all turns from DataBase.
+    /// </summary>
     public async void OnPostButton2()
     {
         foreach (var turn in _turns)
