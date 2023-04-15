@@ -85,7 +85,7 @@ public static class QuickSort
             var partition = Partition(array, left, right);
             var thread = new Thread(() => MultiThreadSort(array, left, partition, freeThreadsNumber - 1));
             thread.Start();
-            MultiThreadSort(array, partition + 1, right, freeThreadsNumber - 2);
+            MultiThreadSort(array, partition + 1, right, freeThreadsNumber - 1);
             thread.Join();
         }
     }
