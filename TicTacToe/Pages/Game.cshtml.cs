@@ -42,6 +42,7 @@ public class Game : PageModel
             }
         }
     }
+
     public async void OnPostButton2()
     {
         foreach (var turn in _turns)
@@ -49,5 +50,7 @@ public class Game : PageModel
             _context.Turns.Remove(turn);
             await _context.SaveChangesAsync();
         }
+
+        Board = new Board(new List<Turn>());
     }
 }
