@@ -1,0 +1,26 @@
+@page
+@model GameOver
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <div>@(Model.Board.GetRow1())</div>
+    <div>@(Model.Board.GetRow2())</div>
+    <div>@(Model.Board.GetRow3())</div>
+    <div>@(Model.Winner)</div>
+    <form method="post">
+        <button type="submit">Играть снова?</button>
+    </form>
+</div>
+
+</body>
+</html>
