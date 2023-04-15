@@ -32,7 +32,7 @@ for (var length = 1000; length <= 10000000; length *= 10)
     multiThreadStopwatch.Stop();
 
     Console.WriteLine(
-        $"Single thread quick sort work time for {length} elements random array: {singleThreadStopWatch.ElapsedMilliseconds * 1000000} ns");
+        $"Single thread quick sort work time for {length} elements random array: {singleThreadStopWatch.ElapsedMilliseconds } ms");
     Console.WriteLine(
-        $"Multi thread quick sort work time: for {length} elements random array with {threadsNumber} threads: {multiThreadStopwatch.ElapsedMilliseconds * 1000000} ns");
+        $"Multi thread quick sort work time: for {length} elements random array with {threadsNumber} threads: {multiThreadStopwatch.ElapsedMilliseconds} ms");
 }
