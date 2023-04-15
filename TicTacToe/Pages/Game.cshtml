@@ -36,7 +36,8 @@
                 }
             </select>
         </p>
-        <button type="submit">Походить</button>
+        <button type="submit" asp-page-handler="Button1">Походить</button>
+        <button type="submit" asp-page-handler="Button2">Заново?</button>
         <div>@(Model.Board.GetRow(0))</div>
         <div>@(Model.Board.GetRow(1))</div>
         <div>@(Model.Board.GetRow(2))</div>

@@ -22,7 +22,7 @@ public class Game : PageModel
     public Turn Turn { get; set; } = new();
 
 
-    public async void OnPostAsync()
+    public async void OnPostButton1()
     {
         var isTurnedAlready = false;
         foreach (var turn in _turns)
@@ -40,6 +40,14 @@ public class Game : PageModel
                 Console.WriteLine("Game Over!");
                 Response.Redirect("/GameOver");
             }
+        }
+    }
+    public async void OnPostButton2()
+    {
+        foreach (var turn in _turns)
+        {
+            _context.Turns.Remove(turn);
+            await _context.SaveChangesAsync();
         }
     }
 }
