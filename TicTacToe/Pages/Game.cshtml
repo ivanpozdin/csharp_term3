@@ -1,0 +1,48 @@
+@page
+@model Game
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Game)</title>
+</head>
+<body>
+<div>
+    <form method="post">
+        <p>
+            <label>Строка</label>
+            <select asp-for="Turn.Row">
+                @{
+                    <option>@(0)</option>
+                    <option>@(1)</option>
+                    <option>@(2)</option>
+                }
+
+            </select>
+        </p>
+        <p>
+            <label>Столбец</label>
+            <select asp-for="Turn.Column">
+                @{
+                    <option>@(0)</option>
+                    <option>@(1)</option>
+                    <option>@(2)</option>
+                }
+            </select>
+        </p>
+        <button type="submit" asp-page-handler="Button1">Походить</button>
+        <button type="submit" asp-page-handler="Button2">Заново?</button>
+        <div>@(Model.Board.GetRow(0))</div>
+        <div>@(Model.Board.GetRow(1))</div>
+        <div>@(Model.Board.GetRow(2))</div>
+    </form>
+
+</div>
+</body>
+</html>
