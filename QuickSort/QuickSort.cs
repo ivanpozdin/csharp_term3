@@ -52,9 +52,9 @@ public static class QuickSort
         }
         else
         {
-            var q = Partition(array, left, right);
-            SingleThreadSort(array, left, q);
-            SingleThreadSort(array, q + 1, right);
+            var middle = Partition(array, left, right);
+            SingleThreadSort(array, left, middle);
+            SingleThreadSort(array, middle + 1, right);
         }
     }
 
